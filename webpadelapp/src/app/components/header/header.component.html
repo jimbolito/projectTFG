@@ -1,0 +1,99 @@
+<!-- <nav class="menu">
+    <ul>
+      <li *ngFor="let category of categories" (click)="toggleSubmenu(category.name)">
+        <a>{{ category.name }}</a>
+        <ul class="submenu" *ngIf="category.open">
+          <li *ngFor="let subcategory of category.subcategories">
+            <a [routerLink]="['/category', subcategory]">{{ subcategory }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+   -->
+
+<!-- Despues del servicio -->
+<!-- <nav class="menu">
+  <ul>
+    <li *ngFor="let category of categories" (click)="toggleSubmenu(category.name)">
+      <a>{{ category.name }}</a>
+      <ul class="submenu" *ngIf="category.open">
+        <li *ngFor="let subcategory of category.subcategories">
+          <a [routerLink]="['/category', subcategory]" [queryParams]="{ category: category.name }">
+            {{ subcategory }}
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav> -->
+
+<!-- menu home redireccion al home -->
+<!-- <nav class="menu">
+    <ul>
+      <li *ngFor="let category of categories" (click)="toggleSubmenu(category.name)">
+        <a>{{ category.name }}</a>
+        <ul class="submenu" *ngIf="category.open">
+          <li *ngFor="let subcategory of category.subcategories">
+            <a [routerLink]="['/category', subcategory]">{{ subcategory }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+   -->
+
+<!-- Despues del servicio -->
+<!-- <nav class="menu">
+  <ul>
+    <li *ngFor="let category of categories" (click)="toggleSubmenu(category.name)">
+      <a>{{ category.name }}</a>
+      <ul class="submenu" *ngIf="category.open">
+        <li *ngFor="let subcategory of category.subcategories">
+          <a [routerLink]="['/category', subcategory]" [queryParams]="{ category: category.name }">
+            {{ subcategory }}
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav> -->
+
+
+<!-- Contenedor para logo y texto centrados -->
+<!-- Barra de anuncio -->
+<div class="top-banner">
+  Entrega gratuita a partir de 22€
+</div>
+<div class="logo-container">
+  <img src="assets/logo_optimizado.png" alt="Logo padelyou" class="logo" />
+  <p class="slogan">padelYou. Desde 1991 ayudándote a ser mejor¡</p>
+</div>
+<nav class="menu">
+  <ul>
+    <!-- Menú Home -->
+    <li>
+      <a [routerLink]="'/'">Home</a>
+    </li>
+
+    <!-- Menú con categorías y subcategorías -->
+    <li *ngFor="let category of categories" (click)="toggleSubmenu(category.name)"
+      [class.has-subcategories]="category.subcategories.length > 0">
+      <a>{{ category.name }}</a>
+      <ul class="submenu" *ngIf="category.open">
+        <!-- <ul class="submenu" [class.open]="category.open"> -->
+        <li *ngFor="let subcategory of category.subcategories">
+          <a [routerLink]="['/category', subcategory]" [queryParams]="{ category: category.name }">
+            {{ subcategory }}
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a [routerLink]="'/'">Sobre Nosotros</a>
+    </li>
+    <li>
+      <a [routerLink]="'/'">Contacto</a>
+    </li>
+  </ul>
+</nav>

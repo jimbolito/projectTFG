@@ -1,0 +1,163 @@
+/* Barra de anuncio */
+.top-banner {
+    background-color: #D31F30; /* Color especificado */
+    color: #FFFFFF; /* Texto blanco */
+    height: 50px; /* Ocupa el 10% del alto de la pantalla */
+    display: flex; /* Para centrar contenido */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    font-size: 14px; /* Ajusta el tamaño del texto */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; /* Agregar aquí */
+    width: 100%; /* Abarca todo el ancho */
+    margin-bottom: 10px;
+}
+
+/* ----------------------------------------------------
+     2. Menú principal centrado
+     ---------------------------------------------------- */
+.menu {
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: center;
+    margin: 0% 5% 2% 5%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; /* Agregar aquí */
+
+}
+
+
+/* Lista horizontal */
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Menú principal en una fila */
+}
+
+/* ----------------------------------------------------
+     3. Ítems de primer nivel (categorías)
+     ---------------------------------------------------- */
+.menu>ul>li {
+    position: relative;
+    /* para posicionar el submenú */
+    margin: 0 15px;
+}
+
+/* Enlace principal del menú:
+     - Texto color #D31F30BF,
+     - Fuente sans-serif, tamaño 14.7px,
+     - Padding: 12.6px 28.35px 12.6px 12.6px
+     - Fondo transparente (hereda el fondo blanco del header)
+  */
+.menu>ul>li>a {
+    color: #D31F30BF;
+    text-decoration: none;
+    /* font-family: sans-serif; */
+    font-size: 14.7px;
+    padding: 12.6px 28.35px 12.6px 12.6px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    background-color: transparent;
+    border-radius: 4px;
+    /* Opcional: esquinas redondeadas */
+}
+
+/* Hover de los enlaces principales:
+     - Texto cambia a #D31F30 (rojo más intenso)
+  */
+.menu>ul>li>a:hover {
+    color: #D31F30;
+}
+
+/* ----------------------------------------------------
+     4. Submenús
+     ---------------------------------------------------- */
+/* Inicialmente ocultos */
+.menu ul li .submenu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #fff;
+    /* Fondo blanco para el submenú */
+    min-width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+    z-index: 999;
+    border-radius: 4px;
+}
+
+/* Muestra el submenú al pasar el cursor sobre la categoría */
+.menu ul li:hover .submenu {
+    display: block;
+}
+
+/* Ítems del submenú */
+.menu ul li .submenu li {
+    margin: 0;
+}
+
+/* Enlaces dentro del submenú:
+     - Texto color #D31F30BF
+     - Mismo padding horizontal/vertical si deseas
+  */
+.menu ul li .submenu li a {
+    display: block;
+    color: #D31F30BF;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 14.7px;
+    padding: 8px 15px;
+    /* Puedes ajustarlo si quieres igual que el menú principal */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Hover en los enlaces del submenú */
+.menu ul li .submenu li a:hover {
+    color: #D31F30;
+    background-color: #f5f5f5;
+    /* Opcional: un fondo claro al hover */
+}
+
+/* ----------------------------------------------------
+     5. Responsive: menú vertical en pantallas pequeñas
+     ---------------------------------------------------- */
+@media (max-width: 768px) {
+    .menu ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu>ul>li {
+        margin: 10px 0;
+    }
+}
+
+
+/* Contenedor que centra la imagen y el texto */
+.logo-container {
+    text-align: center;
+    /* Centra horizontalmente texto e imagen */
+    margin-bottom: 20px;
+    /* Separación inferior antes del menú */
+}
+
+.logo {
+    width: 17%;
+    /* Ajusta el tamaño de la imagen */
+    max-width: 200px;
+    /* Opcional: establecer un máximo si lo deseas */
+}
+
+.slogan {
+    margin-top: 0%;
+    font-weight: 10;
+    /* Ajusta el grosor de la letra */
+    margin-top: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;;
+    color: #999494;
+    font-size: 13px;
+    /* Separación entre la imagen y el texto */
+}

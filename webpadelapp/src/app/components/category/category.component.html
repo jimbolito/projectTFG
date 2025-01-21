@@ -1,0 +1,38 @@
+<!-- <div class="category">
+    <h1>Subcategoría: {{ categoryName }}</h1>
+    <div *ngIf="products?.length > 0">
+      <div *ngFor="let product of products" class="product">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Precio: {{ product.price }} €</p>
+      </div>
+    </div>
+    <p *ngIf="!products">Cargando productos...</p>
+  </div>
+   -->
+
+<!-- Despues de agregar el servicio -->
+
+<div>
+  <h1>{{ categoryName }} - {{ subcategoryName }}</h1>
+
+  <div *ngIf="error; else productList">
+    <p class="error">{{ error }}</p>
+  </div>
+
+  <ng-template #productList>
+    <div *ngIf="products.length > 0; else noProducts">
+      <div *ngFor="let product of products" class="product">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Precio: {{ product.price }} €</p>
+        <p>Descuento: {{ product.percentage_discount || 'Sin descuento' }}</p>
+        <p>Stock: {{ product.stock_quantity || 'No disponible' }}</p>
+      </div>
+    </div>
+
+    <ng-template #noProducts>
+      <p>No hay productos disponibles para esta subcategoría.</p>
+    </ng-template>
+  </ng-template>
+</div>
