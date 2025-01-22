@@ -13,10 +13,20 @@ import {juggler} from '@loopback/repository';
 //   useNewUrlParser: true
 // };
 
+
+//funciona en localhost:
+// const config = {
+//   name: 'mongodb',
+//   connector: 'mongodb',
+//   url: 'mongodb://localhost:27017/padelmarketdb',
+//   useUnifiedTopology: true
+// };
+
+//Cambiada segun el docker: 
 const config = {
   name: 'mongodb',
   connector: 'mongodb',
-  url: 'mongodb://localhost:27017/padelmarketdb',
+  url: 'mongodb://mongodb:27017/padelmarketdb', // Cambiar localhost o 127.0.0.1 por mongodb
   useUnifiedTopology: true
 };
 

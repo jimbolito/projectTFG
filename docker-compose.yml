@@ -1,0 +1,41 @@
+services:
+  mongodb:
+    image: mongo:5
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  api-padel:
+    build:
+      context: ./api-padel
+    container_name: api-padel
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+      - CHROME_BIN=/usr/bin/google-chrome
+    depends_on:
+      - mongodb
+
+  webpadelapp:
+    build:
+      context: ./webpadelapp
+    container_name: webpadelapp
+    ports:
+      - "4200:4200"
+    # Montamos el código local, pero node_modules se guarda en un volumen aparte:
+    volumes:
+      - ./webpadelapp:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - api-padel
+
+volumes:
+  mongo-data:
+  node_modules:

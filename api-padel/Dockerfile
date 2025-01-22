@@ -1,47 +1,64 @@
-# # Check out https://hub.docker.com/_/node to select a new base image
-# FROM docker.io/library/node:18-slim
+# # Usa la imagen oficial de Node.js
+# FROM node:20
 
-# # Set to a non-root built-in user `node`
-# USER node
+# # Establece el directorio de trabajo
+# WORKDIR /usr/src/app
 
-# # Create app directory (with user `node`)
-# RUN mkdir -p /home/node/app
+# # Copia los archivos necesarios para instalar dependencias
+# COPY package*.json ./
 
-# WORKDIR /home/node/app
-
-# # Install app dependencies
-# # A wildcard is used to ensure both package.json AND package-lock.json are copied
-# # where available (npm@5+)
-# COPY --chown=node package*.json ./
-
+# # Instala las dependencias
 # RUN npm install
 
-# # Bundle app source code
-# COPY --chown=node . .
+# # Copia todo el código fuente al contenedor
+# COPY . .
 
-# RUN npm run build
+# # Expone el puerto en el que se ejecutará la API
+# EXPOSE 3000
 
-# # Bind to all network interfaces so that it can be mapped to the host OS
-# ENV HOST=0.0.0.0 PORT=3000
+# # Comando para iniciar la aplicación en modo desarrollo
+# CMD ["npm", "start"]
 
-# EXPOSE ${PORT}
-# CMD [ "node", "." ]
-
-
-# Usa la imagen oficial de Node.js (v20)
+# Usa una imagen base oficial de Node.js
 FROM node:20
+
+# Instala las dependencias necesarias para Google Chrome
+RUN apt-get update && apt-get install -y \
+  wget \
+  gnupg \
+  fonts-liberation \
+  libappindicator3-1 \
+  libasound2 \
+  libatk-bridge2.0-0 \
+  libatk1.0-0 \
+  libcups2 \
+  libdbus-1-3 \
+  libgdk-pixbuf2.0-0 \
+  libnspr4 \
+  libnss3 \
+  libx11-xcb1 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxrandr2 \
+  libxshmfence1 \
+  xdg-utils \
+  --no-install-recommends && \
+  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+  sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
+  apt-get update && apt-get install -y google-chrome-stable && \
+  rm -rf /var/lib/apt/lists/*
 
 # Establece el directorio de trabajo
 WORKDIR /usr/src/app
 
-# Copia los archivos del proyecto
+# Copia los archivos necesarios para instalar dependencias
 COPY package*.json ./
-COPY tsconfig.json ./
-COPY . .
 
-# Instala las dependencias
+# Instala las dependencias de Node.js
 RUN npm install
-RUN npm run build
+
+# Copia el resto del código fuente al contenedor
+COPY . .
 
 # Expone el puerto de la API
 EXPOSE 3000

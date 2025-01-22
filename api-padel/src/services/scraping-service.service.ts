@@ -68,22 +68,22 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
   /**
    * Método para aceptar cookies antes de realizar el scraping.
    */
-  private async acceptCookies(page: any) {
-    // Esperar a que aparezca el contenedor del banner de cookies
-    await page.waitForSelector('#CybotCookiebotDialogFooter');
+  // private async acceptCookies(page: any) {
+  //   // Esperar a que aparezca el contenedor del banner de cookies
+  //   await page.waitForSelector('#CybotCookiebotDialogFooter');
 
-    // Seleccionar el botón "Allow all"
-    const allowAllButton = await page.$(
-      '#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll'
-    );
-    if (allowAllButton) {
-      await allowAllButton.click();
-      console.log("Aceptando cookies");
-      await this.delay(5000);
-    } else {
-      throw new Error('No se encontró el botón "Allow all" en el banner de cookies.');
-    }
-  }
+  //   // Seleccionar el botón "Allow all"
+  //   const allowAllButton = await page.$(
+  //     '#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll'
+  //   );
+  //   if (allowAllButton) {
+  //     await allowAllButton.click();
+  //     console.log("Aceptando cookies");
+  //     await this.delay(5000);
+  //   } else {
+  //     throw new Error('No se encontró el botón "Allow all" en el banner de cookies.');
+  //   }
+  // }
 
   //Waiting timing to do something:
   private async delay(ms?: number) {
@@ -142,9 +142,17 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
   value(): ScrapingService {
     return {
       scrape: async (url: string): Promise<ScrapedProduct[]> => {
+        //Entornolocalhost que si funciona:
+        // const browser = await puppeteer.launch({
+        //   headless: false, // Cambiar a `true` si no necesitas ver la interacción
+        //   args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        // });
+
+        //Entorno docker-compose
         const browser = await puppeteer.launch({
-          headless: false, // Cambiar a `true` si no necesitas ver la interacción
-          args: ['--no-sandbox', '--disable-setuid-sandbox'],
+          executablePath: '/usr/bin/google-chrome', // Ruta al ejecutable de Google Chrome
+          headless: true,
+          args: ['--no-sandbox', '--disable-setuid-sandbox'], // Opciones necesarias para contenedores Docker
         });
         const page = await browser.newPage();
         await page.setViewport({ width: 1280, height: 720 });
@@ -153,7 +161,7 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
         await page.goto(url, { waitUntil: 'networkidle2' });
 
         // Aceptar cookies si es necesario
-        await this.acceptCookies(page);
+        // await this.acceptCookies(page);
 
         // Esperar a que cargue el contenedor de productos
         await page.waitForSelector('#product-grid');

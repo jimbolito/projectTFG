@@ -19,7 +19,10 @@ if (require.main === module) {
   const config = {
     rest: {
       port: +(process.env.PORT ?? 3000),
-      host: process.env.HOST || '127.0.0.1',
+      //EScucha en localhost:
+      // host: process.env.HOST || '127.0.0.1',
+      //Escuchae en todas las interfaces:
+      host: process.env.HOST || '0.0.0.0', // Escucha en todas las interfaces
       // The `gracePeriodForClose` provides a graceful close for http/https
       // servers with keep-alive clients. The default value is `Infinity`
       // (don't force-close). If you want to immediately destroy all sockets
