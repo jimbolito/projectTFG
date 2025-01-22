@@ -23,7 +23,9 @@ export class ProductService {
   // private readonly BASE_URL = 'http://localhost:3000'; // Cambia según la URL de tu API
 
   //En dockercompose:
-  private readonly BASE_URL = 'http://api-padel:3000'; // Apunta al contenedor de la API
+  // private readonly BASE_URL = 'http://api-padel:3000'; // Apunta al contenedor de la API
+  private readonly BASE_URL = 'http://localhost:3000';
+
 
 
   constructor(private http: HttpClient) { }
