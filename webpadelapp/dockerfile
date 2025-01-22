@@ -1,26 +1,24 @@
-# Usa la imagen oficial de Node.js (v20) para construir la aplicación
-FROM node:20 AS build
+# Usa la imagen oficial de Node.js
+FROM node:20
 
 # Establece el directorio de trabajo
 WORKDIR /usr/src/app
 
-# Copia los archivos del proyecto
+# Copia los archivos necesarios para instalar dependencias
 COPY package*.json ./
-COPY angular.json ./
+
+# Instala las dependencias
+RUN npm install
+
+# Copia todo el código fuente al contenedor
 COPY . .
 
-# Instala las dependencias y construye la aplicación
-RUN npm install
-RUN npm run build --prod
+# Expone el puerto del servidor de desarrollo de Angular
+EXPOSE 4200
 
-# Usa una imagen ligera para servir la aplicación
-FROM nginx:alpine
+# Comando para iniciar la aplicación en modo desarrollo
+CMD ["npm", "start"]
 
-# Copia los archivos generados por Angular al servidor NGINX
-COPY --from=build /usr/src/app/dist/webpadelapp /usr/share/nginx/html
 
-# Expone el puerto del servidor NGINX
-EXPOSE 80
 
-# Comando para iniciar NGINX
-CMD ["nginx", "-g", "daemon off;"]
+

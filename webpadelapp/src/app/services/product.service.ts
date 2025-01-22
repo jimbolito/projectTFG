@@ -19,9 +19,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root', // Disponible en toda la aplicación
 })
 export class ProductService {
-  private readonly BASE_URL = 'http://localhost:3000'; // Cambia según la URL de tu API
+  //En local funciona
+  // private readonly BASE_URL = 'http://localhost:3000'; // Cambia según la URL de tu API
 
-  constructor(private http: HttpClient) {}
+  //En dockercompose:
+  private readonly BASE_URL = 'http://api-padel:3000'; // Apunta al contenedor de la API
+
+
+  constructor(private http: HttpClient) { }
 
   // Obtener productos según la categoría y la marca
   getProducts(category: string, brand: string): Observable<any[]> {
