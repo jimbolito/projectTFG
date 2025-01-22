@@ -1,25 +1,3 @@
-# # Usa la imagen oficial de Node.js
-# FROM node:20
-
-# # Establece el directorio de trabajo
-# WORKDIR /usr/src/app
-
-# # Copia los archivos necesarios para instalar dependencias
-# COPY package*.json ./
-
-# # Instala las dependencias
-# RUN npm install
-
-# # Copia todo el código fuente al contenedor
-# COPY . .
-
-# # Expone el puerto en el que se ejecutará la API
-# EXPOSE 3000
-
-# # Comando para iniciar la aplicación en modo desarrollo
-# CMD ["npm", "start"]
-
-# Usa una imagen base oficial de Node.js
 FROM node:20
 
 # Instala las dependencias necesarias para Google Chrome

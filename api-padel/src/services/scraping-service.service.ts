@@ -1,26 +1,3 @@
-// import { /* inject, */ BindingScope, injectable, Provider} from '@loopback/core';
-
-// /*
-//  * Fix the service type. Possible options can be:
-//  * - import {ScrapingService} from 'your-module';
-//  * - export type ScrapingService = string;
-//  * - export interface ScrapingService {}
-//  */
-// export type ScrapingService = unknown;
-
-// @injectable({scope: BindingScope.TRANSIENT})
-// export class ScrapingServiceProvider implements Provider<ScrapingService> {
-//   constructor(/* Add @inject to inject parameters */) { }
-
-//   value() {
-//     // Add your implementation here
-//     throw new Error('To be implemented');
-//   }
-// }
-
-
-//codigo nuevo
-
 import {
   BindingScope,
   injectable,
@@ -49,10 +26,6 @@ export interface ScrapedProduct {
 
 }
 
-/**
- * Esta será la interfaz de nuestro servicio,
- * con el método `scrape` que recibe una URL.
- */
 export interface ScrapingService {
   scrape(url: string): Promise<ScrapedProduct[]>;
 }
@@ -193,6 +166,7 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
 
           // Extrae la información del producto
           const name = await productPage.$eval('.product-title', el => el.textContent.trim());
+          console.log("Producto scrapeado:", name);
           const priceText = await productPage.$eval('.price ins .amount', el => el.textContent.trim());
           // const initialPriceText = await productPage.$eval('.price del .amount', el => el.textContent.trim());
           // Manejo de error para el precio inicial
@@ -281,14 +255,12 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
           };
 
           products.push(productData);
-          console.log(productData);
+          // console.log(productData);
 
           await productPage.close();
         }
-
         // Cerrar el navegador
         await browser.close();
-
         return products;
       },
     };

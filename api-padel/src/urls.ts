@@ -1,4 +1,3 @@
-// src/urls.ts
 const urls = {
   shoesCategory: {
     Adidas: 'https://padelmarket.com/es-eu/collections/zapatillas?filter.p.vendor=Adidas',
