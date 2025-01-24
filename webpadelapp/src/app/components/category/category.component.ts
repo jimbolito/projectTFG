@@ -26,7 +26,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Suscribirse a los cambios en los parámetros de la ruta
@@ -50,10 +50,28 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   // Llama al servicio para obtener los productos
+  // fetchProducts(category: string, brand: string): void {
+  //   this.productService.getProducts(category, brand).subscribe({
+  //     next: (data) => {
+  //       this.products = data;
+  //       this.error = null;
+  //     },
+  //     error: (err) => {
+  //       console.error(err);
+  //       this.error = 'Error al obtener los productos. Por favor, intente de nuevo.';
+  //     },
+  //   });
+  // }
+
+
+
+    // Llama al servicio para obtener los productos
   fetchProducts(category: string, brand: string): void {
     this.productService.getProducts(category, brand).subscribe({
       next: (data) => {
         this.products = data;
+        console.log("productos a continuacion de data");
+        console.log(data);
         this.error = null;
       },
       error: (err) => {

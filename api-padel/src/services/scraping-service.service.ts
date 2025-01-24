@@ -100,9 +100,6 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
         // Añadir un pequeño retraso entre clics para simular interacción humana
         await this.delay(600);
       }
-
-      console.log('Acción completada.');
-
       return randomClicks;
     } catch (error) {
       console.error('Ocurrió un error:', error);
@@ -229,10 +226,11 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
             return null;
           });
 
-          const images = await productPage.$$eval('.product-images img', imgs =>
+          const imagesAll = await productPage.$$eval('.product-images img', imgs =>
             imgs.map(img => img.getAttribute('src'))
           );
 
+          // console.log(imagesAll)
           const price = parseFloat(priceText.replace('€', '').replace(',', '.'));
           const initialPrice = parseFloat(initialPriceText.replace('€', '').replace(',', '.'));
           const creationDate = new Date();
@@ -250,12 +248,12 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
             sex,
             level,
             weight,
-            images,
+            images: imagesAll,
             creation_date: creationDate
           };
 
           products.push(productData);
-          // console.log(productData);
+          // console.log(productData.images);
 
           await productPage.close();
         }

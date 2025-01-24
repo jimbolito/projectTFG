@@ -1,19 +1,4 @@
-<!-- <div class="category">
-    <h1>Subcategoría: {{ categoryName }}</h1>
-    <div *ngIf="products?.length > 0">
-      <div *ngFor="let product of products" class="product">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-        <p>Precio: {{ product.price }} €</p>
-      </div>
-    </div>
-    <p *ngIf="!products">Cargando productos...</p>
-  </div>
-   -->
-
-<!-- Despues de agregar el servicio -->
-
-<div>
+<!-- <div>
   <h1>{{ categoryName }} - {{ subcategoryName }}</h1>
 
   <div *ngIf="error; else productList">
@@ -28,6 +13,72 @@
         <p>Precio: {{ product.price }} €</p>
         <p>Descuento: {{ product.percentage_discount || 'Sin descuento' }}</p>
         <p>Stock: {{ product.stock_quantity || 'No disponible' }}</p>
+      </div>
+    </div>
+
+    <ng-template #noProducts>
+      <p>No hay productos disponibles para esta subcategoría.</p>
+    </ng-template>
+  </ng-template>
+</div> -->
+
+
+
+
+<!-- 
+<div style="background-color: #EDEDED; padding: 20px;">
+  <h1>{{ categoryName }} - {{ subcategoryName }}</h1>
+
+  <div *ngIf="error; else productList">
+    <p class="error">{{ error }}</p>
+  </div>
+
+  <ng-template #productList>
+    <div *ngIf="products.length > 0; else noProducts">
+      <div class="product-grid">
+        <div *ngFor="let product of products" class="product-card">
+          <img *ngIf="product.image" [src]="product.image" alt="{{ product.name }}" class="product-image" />
+          <p>Imagen: {{product.image[0]}}</p>
+          <h3>{{ product.name }}</h3> -->
+<!-- <p>{{ product.description }}</p> -->
+<!-- <p>Precio: {{ product.price }} €</p>
+          <p>Descuento: {{ product.percentage_discount || 'Sin descuento' }}</p>
+          <p>Stock: {{ product.stock_quantity || 'No disponible' }}</p>
+          <button class="add-to-cart">Añadir a la cesta</button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noProducts>
+      <p>No hay productos disponibles para esta subcategoría.</p>
+    </ng-template>
+  </ng-template>
+</div> -->
+
+
+
+
+<div style="background-color: #EDEDED; padding: 20px;">
+  <h1>{{ categoryName }} - {{ subcategoryName }}</h1>
+
+  <div *ngIf="error; else productList">
+    <p class="error">{{ error }}</p>
+  </div>
+
+  <ng-template #productList>
+    <div *ngIf="products.length > 0; else noProducts">
+      <div class="product-grid">
+        <div *ngFor="let product of products" class="product-card">
+          <!-- Renderizar la primera imagen del array -->
+          <!-- <img *ngIf="product.image" [src]="product.image" alt="{{ product.name }}" class="product-image" /> -->
+          <img *ngIf="product.images && product.images.length > 0" [src]="product.images[0]" alt="{{ product.name }}"
+            class="product-image" />
+          <h3>{{ product.name }}</h3>
+          <p>Precio: {{ product.price }} €</p>
+          <p>Descuento: {{ product.percentage_discount || 'Sin descuento' }}</p>
+          <p>Stock: {{ product.stock_quantity || 'No disponible' }}</p>
+          <button class="add-to-cart">Más información</button>
+        </div>
       </div>
     </div>
 
