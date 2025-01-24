@@ -69,7 +69,7 @@
 
 .product-card {
   background-color: #ffffff;
-  border: 2px solid red;
+  border: 1.5px solid red;
   border-radius: 8px;
   padding: 20px;
   text-align: center;
@@ -94,7 +94,7 @@
 
 .add-to-cart {
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 10px 20px;
   background-color: #ffffff;
   border: 1px solid red;
@@ -136,40 +136,44 @@ body {
 
 .modal {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .modal .close {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
+  top: 15px;
+  right: 15px;
+  font-size: 28px;
   cursor: pointer;
   color: red;
+  font-weight: bold;
 }
 
 .modal-content {
   display: flex;
+  gap: 30px;
   flex-wrap: wrap;
-  gap: 20px;
 }
 
 .modal-images {
   position: relative;
-  width: 50%;
-  max-width: 250px;
-  margin: auto;
+  width: 45%;
+  max-width: 350px;
 }
 
 .modal-images img {
   width: 100%;
   height: auto;
   border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .modal-images .prev,
@@ -180,35 +184,63 @@ body {
   background: rgba(255, 0, 0, 0.8);
   color: white;
   border: none;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   border-radius: 50%;
   font-size: 18px;
 }
 
 .modal-images .prev {
-  left: -20px;
+  left: -25px;
 }
 
 .modal-images .next {
-  right: -20px;
+  right: -25px;
 }
 
 .modal-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .modal-info h2 {
   margin-top: 0;
-  font-size: 22px;
+  font-size: 24px;
   color: red;
+  margin-bottom: 15px;
 }
 
 .modal-info p {
   margin: 10px 0;
   font-size: 16px;
   color: #333;
+  line-height: 1.6;
+}
+
+.modal-info p strong {
+  color: black;
+}
+
+/* Mejorar la separación de contenido en dispositivos pequeños */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .modal-images {
+    width: 80%;
+  }
+
+  .modal-images .prev,
+  .modal-images .next {
+    display: none;
+  }
+
+  .modal-info {
+    width: 100%;
+  }
 }
