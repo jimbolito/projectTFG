@@ -1,7 +1,3 @@
-
-
-//Solucion subscribirse a los cambios:
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
@@ -16,20 +12,21 @@ import { Subscription } from 'rxjs';
   imports: [CommonModule],
 })
 export class CategoryComponent implements OnInit, OnDestroy {
-  categoryName: string | null = ''; // Categoría seleccionada
-  subcategoryName: string | null = ''; // Subcategoría seleccionada
-  products: any[] = []; // Productos obtenidos desde la API
-  error: string | null = null; // Para manejar errores
+  categoryName: string | null = '';
+  subcategoryName: string | null = '';
+  products: any[] = [];
+  error: string | null = null;
 
-  private routeSubscription: Subscription | null = null; // Para gestionar la suscripción
+  selectedProduct: any | null = null; // Producto seleccionado para el modal
+  currentImageIndex: number = 0; // Índice actual de la imagen en el modal
+  private routeSubscription: Subscription | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    // Suscribirse a los cambios en los parámetros de la ruta
     this.routeSubscription = this.route.params.subscribe((params) => {
       this.subcategoryName = params['subcategory'];
       this.categoryName = this.route.snapshot.queryParamMap.get('category');
@@ -43,35 +40,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Limpiar la suscripción cuando el componente se destruye
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
   }
 
-  // Llama al servicio para obtener los productos
-  // fetchProducts(category: string, brand: string): void {
-  //   this.productService.getProducts(category, brand).subscribe({
-  //     next: (data) => {
-  //       this.products = data;
-  //       this.error = null;
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //       this.error = 'Error al obtener los productos. Por favor, intente de nuevo.';
-  //     },
-  //   });
-  // }
-
-
-
-    // Llama al servicio para obtener los productos
   fetchProducts(category: string, brand: string): void {
     this.productService.getProducts(category, brand).subscribe({
       next: (data) => {
         this.products = data;
-        console.log("productos a continuacion de data");
-        console.log(data);
         this.error = null;
       },
       error: (err) => {
@@ -79,5 +56,29 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.error = 'Error al obtener los productos. Por favor, intente de nuevo.';
       },
     });
+  }
+
+  openModal(product: any): void {
+    this.selectedProduct = product;
+    this.currentImageIndex = 0; // Resetear al inicio de las imágenes
+  }
+
+  closeModal(): void {
+    this.selectedProduct = null;
+  }
+
+  nextImage(): void {
+    if (this.selectedProduct) {
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.selectedProduct.images.length;
+    }
+  }
+
+  prevImage(): void {
+    if (this.selectedProduct) {
+      this.currentImageIndex =
+        (this.currentImageIndex - 1 + this.selectedProduct.images.length) %
+        this.selectedProduct.images.length;
+    }
   }
 }
