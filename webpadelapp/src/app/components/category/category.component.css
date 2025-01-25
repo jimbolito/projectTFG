@@ -71,7 +71,8 @@
   background-color: #ffffff;
   border: 1.5px solid red;
   border-radius: 8px;
-  padding: 20px;
+  /* padding: 20px; */
+  padding: 20px 20px 0 20px;
   text-align: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -137,7 +138,7 @@ body {
 .modal {
   background: white;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 15px;
   width: 90%;
   max-width: 800px;
   position: relative;
@@ -243,4 +244,12 @@ body {
   .modal-info {
     width: 100%;
   }
+}
+
+.product-image {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.05);
 }
