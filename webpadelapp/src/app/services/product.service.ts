@@ -34,13 +34,34 @@ export class ProductService {
   getProducts(category: string, brand: string): Observable<any[]> {
     let endpoint = '';
 
+    console.log("category");
+    console.log(category)
+
+    console.log("brand");
+    console.log(brand)
+
+
     // Define el endpoint según la categoría
-    if (category === 'Palas de padel') {
-      endpoint = `/padelrackets/brand/${brand}`;
-    } else if (category === 'Zapatillas') {
-      endpoint = `/padelballs/brand/${brand}`;
-    } else {
-      throw new Error(`Categoría no soportada: ${category}`);
+    switch (category) {
+      case 'Palas de padel':
+        endpoint = `/padelrackets/brand/${brand}`;
+        console.log("endpoint creado");
+        console.log(endpoint)
+        break;
+      case 'Zapatillas':
+        endpoint = `/padelballs/brand/${brand}`;
+        break;
+      case 'Accesorios':
+        endpoint = `/padelaccessories/brand/${brand}`;
+        break;
+      case 'Ropa':
+        endpoint = `/padelclothings/brand/${brand}`;
+        break;
+      case 'Pelotas':
+        endpoint = `/padelbags/brand/${brand}`;
+        break;
+      default:
+        throw new Error(`Categoría no soportada: ${category}`);
     }
 
     return this.http.get<any[]>(`${this.BASE_URL}${endpoint}`);

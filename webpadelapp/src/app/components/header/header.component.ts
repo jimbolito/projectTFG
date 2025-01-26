@@ -13,27 +13,27 @@ export class HeaderComponent {
   categories = [
     {
       name: 'Palas de padel',
-      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', ,'Dunlop', 'Enebe','Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
       open: false,
     },
     {
       name: 'Zapatillas',
-      subcategories: ['Adidas',  'Babolat', 'Bullpadel', 'BlackCrown', ,'Dunlop', 'Enebe','Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
       open: false,
     },
     {
       name: 'Ropa',
-      subcategories: ['Adidas',  'Babolat', 'Bullpadel', 'BlackCrown', ,'Dunlop', 'Enebe','Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
       open: false,
     },
     {
       name: 'Pelotas',
-      subcategories: ['Adidas',  'Babolat', 'Bullpadel', 'BlackCrown', ,'Dunlop', 'Enebe','Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
       open: false,
     },
     {
       name: 'Accesorios',
-      subcategories: ['Adidas',  'Babolat', 'Bullpadel', 'BlackCrown', ,'Dunlop', 'Enebe','Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
       open: false,
     }
   ];
@@ -43,6 +43,14 @@ export class HeaderComponent {
       cat.name === categoryName ? { ...cat, open: !cat.open } : { ...cat, open: false }
     );
   }
+
+  slugify(text: string | undefined): string {
+    if (!text) {
+      return ''; // Devuelve una cadena vacía si el texto es undefined o null
+    }
+    return text.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
+  }
+  
 
   // toggleSubmenu(categoryName: string): void {
   //   this.categories = this.categories.map((category) =>
