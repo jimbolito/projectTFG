@@ -8,15 +8,7 @@ import {Entity, model, property} from '@loopback/repository';
   },
 })
 export class Padelracket extends Entity {
-  //original id:
-  // @property({
-  //   type: 'number',
-  //   id: true,
-  //   generated: true,
-  // })
-  // id?: number;
 
-  //id mofificado:
   @property({
     type: 'string',
     id: true,
