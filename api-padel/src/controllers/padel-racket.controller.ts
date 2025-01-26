@@ -149,7 +149,7 @@ export class PadelRacketController {
   }
 
   //Filtrar palas por marca:
-  @get('/padelrackets/brand/{brand}')
+  @get('/padelrackets/category/{brand}')
   @response(200, {
     description: 'Array of Padelracket model instances filtered by brand',
     content: {
