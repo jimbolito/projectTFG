@@ -18,22 +18,22 @@ export class HeaderComponent {
     },
     {
       name: 'Zapatillas',
-      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'Joma', 'Wilson', 'Puma'],
       open: false,
     },
     {
       name: 'Ropa',
-      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'Nox', 'Puma', 'Vibora', 'Wilson'],
       open: false,
     },
     {
       name: 'Pelotas',
-      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Head', 'Wilson', 'StarVie', ''],
       open: false,
     },
     {
       name: 'Accesorios',
-      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'BlackCrown', , 'Dunlop', 'Enebe', 'Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'Wilson', 'Nox'],
       open: false,
     }
   ];
@@ -50,7 +50,7 @@ export class HeaderComponent {
     }
     return text.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
   }
-  
+
 
   // toggleSubmenu(categoryName: string): void {
   //   this.categories = this.categories.map((category) =>
