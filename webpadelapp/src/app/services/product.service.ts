@@ -109,12 +109,34 @@ export class ProductService {
     let endpoint = '';
 
     // Define el endpoint según la categoría
-    if (category === 'Palas de padel') {
-      endpoint = `/padelrackets/brand/${brand}`;
-    } else if (category === 'Zapatillas') {
-      endpoint = `/padelballs/brand/${brand}`;
-    } else {
-      throw new Error(`Categoría no soportada: ${category}`);
+    // if (category === 'Palas de padel') {
+    //   endpoint = `/padelrackets/brand/${brand}`;
+    // } else if (category === 'Zapatillas') {
+    //   endpoint = `/padelballs/brand/${brand}`;
+    // } else {
+    //   throw new Error(`Categoría no soportada: ${category}`);
+    // }
+
+
+    // Define el endpoint según la categoría
+    switch (category) {
+      case 'Palas de padel':
+        endpoint = `/padelrackets/brand/${brand}`;
+        break;
+      case 'Zapatillas':
+        endpoint = `/padelshoes/brand/${brand}`;
+        break;
+      case 'Accesorios':
+        endpoint = `/padel-accesories/brand/${brand}`;
+        break;
+      case 'Ropa':
+        endpoint = `/padel-clothings/brand/${brand}`;
+        break;
+      case 'Pelotas':
+        endpoint = `/padelballs/brand/${brand}`;
+        break;
+      default:
+        throw new Error(`Categoría no soportada: ${category}`);
     }
 
     return this.http.get<any[]>(`${this.BASE_URL}${endpoint}`);

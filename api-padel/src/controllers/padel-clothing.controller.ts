@@ -147,4 +147,27 @@ export class PadelClothingController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.padelClothingRepository.deleteById(id);
   }
+
+    //Filtrar por marca:
+    @get('/padel-clothings/brand/{brand}')
+    @response(200, {
+      description: 'Array of Padelracket model instances filtered by brand',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'array',
+            items: getModelSchemaRef(PadelClothing, { includeRelations: true }),
+          },
+        },
+      },
+    })
+    async findByBrand(
+      @param.path.string('brand') brand: string,
+    ): Promise<PadelClothing[]> {
+      return this.padelClothingRepository.find({
+        where: {
+          brand: brand, // Aseguramos que el filtro sea exacto
+        },
+      });
+    }
 }

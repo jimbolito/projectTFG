@@ -17,19 +17,19 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {Padelball} from '../models';
-import {PadelballRepository} from '../repositories';
+import { Padelball } from '../models';
+import { PadelballRepository } from '../repositories';
 
 export class PadelBallController {
   constructor(
     @repository(PadelballRepository)
-    public padelballRepository : PadelballRepository,
-  ) {}
+    public padelballRepository: PadelballRepository,
+  ) { }
 
   @post('/padelballs')
   @response(200, {
     description: 'Padelball model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Padelball)}},
+    content: { 'application/json': { schema: getModelSchemaRef(Padelball) } },
   })
   async create(
     @requestBody({
@@ -50,7 +50,7 @@ export class PadelBallController {
   @get('/padelballs/count')
   @response(200, {
     description: 'Padelball model count',
-    content: {'application/json': {schema: CountSchema}},
+    content: { 'application/json': { schema: CountSchema } },
   })
   async count(
     @param.where(Padelball) where?: Where<Padelball>,
@@ -65,7 +65,7 @@ export class PadelBallController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Padelball, {includeRelations: true}),
+          items: getModelSchemaRef(Padelball, { includeRelations: true }),
         },
       },
     },
@@ -79,13 +79,13 @@ export class PadelBallController {
   @patch('/padelballs')
   @response(200, {
     description: 'Padelball PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+    content: { 'application/json': { schema: CountSchema } },
   })
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Padelball, {partial: true}),
+          schema: getModelSchemaRef(Padelball, { partial: true }),
         },
       },
     })
@@ -100,13 +100,13 @@ export class PadelBallController {
     description: 'Padelball model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Padelball, {includeRelations: true}),
+        schema: getModelSchemaRef(Padelball, { includeRelations: true }),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Padelball, {exclude: 'where'}) filter?: FilterExcludingWhere<Padelball>
+    @param.filter(Padelball, { exclude: 'where' }) filter?: FilterExcludingWhere<Padelball>
   ): Promise<Padelball> {
     return this.padelballRepository.findById(id, filter);
   }
@@ -120,7 +120,7 @@ export class PadelBallController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Padelball, {partial: true}),
+          schema: getModelSchemaRef(Padelball, { partial: true }),
         },
       },
     })
@@ -157,7 +157,7 @@ export class PadelBallController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Padelball, {includeRelations: true}),
+          items: getModelSchemaRef(Padelball, { includeRelations: true }),
         },
       },
     },

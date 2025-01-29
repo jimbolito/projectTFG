@@ -149,25 +149,26 @@ export class PadelShoeController {
   }
 
     //Filtrar zapatillas por marca:
-    @get('/padelballs/brand/{brand}')
-    @response(200, {
-      description: 'Array of Padelracket model instances filtered by brand',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'array',
-            items: getModelSchemaRef(Padelshoe, {includeRelations: true}),
-          },
+  @get('/padelshoes/brand/{brand}')
+  @response(200, {
+    description: 'Array of Padelracket model instances filtered by brand',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Padelshoe, {includeRelations: true}),
         },
       },
-    })
-    async findByBrand(
-      @param.path.string('brand') brand: string,
-    ): Promise<Padelshoe[]> {
-      return this.padelshoeRepository.find({
-        where: {
-          brand: brand, // Aseguramos que el filtro sea exacto
-        },
-      });
-    }
+    },
+  })
+  async findByBrand(
+    @param.path.string('brand') brand: string,
+  ): Promise<Padelshoe[]> {
+    return this.padelshoeRepository.find({
+      where: {
+        brand: brand, // Aseguramos que el filtro sea exacto
+      },
+    });
+  } 
+
 }

@@ -17,19 +17,19 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {PadelAccesory} from '../models';
-import {PadelAccesoryRepository} from '../repositories';
+import { PadelAccesory } from '../models';
+import { PadelAccesoryRepository } from '../repositories';
 
 export class PadelAccesoryController {
   constructor(
     @repository(PadelAccesoryRepository)
-    public padelAccesoryRepository : PadelAccesoryRepository,
-  ) {}
+    public padelAccesoryRepository: PadelAccesoryRepository,
+  ) { }
 
   @post('/padel-accesories')
   @response(200, {
     description: 'PadelAccesory model instance',
-    content: {'application/json': {schema: getModelSchemaRef(PadelAccesory)}},
+    content: { 'application/json': { schema: getModelSchemaRef(PadelAccesory) } },
   })
   async create(
     @requestBody({
@@ -50,7 +50,7 @@ export class PadelAccesoryController {
   @get('/padel-accesories/count')
   @response(200, {
     description: 'PadelAccesory model count',
-    content: {'application/json': {schema: CountSchema}},
+    content: { 'application/json': { schema: CountSchema } },
   })
   async count(
     @param.where(PadelAccesory) where?: Where<PadelAccesory>,
@@ -65,7 +65,7 @@ export class PadelAccesoryController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(PadelAccesory, {includeRelations: true}),
+          items: getModelSchemaRef(PadelAccesory, { includeRelations: true }),
         },
       },
     },
@@ -79,13 +79,13 @@ export class PadelAccesoryController {
   @patch('/padel-accesories')
   @response(200, {
     description: 'PadelAccesory PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+    content: { 'application/json': { schema: CountSchema } },
   })
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PadelAccesory, {partial: true}),
+          schema: getModelSchemaRef(PadelAccesory, { partial: true }),
         },
       },
     })
@@ -100,13 +100,13 @@ export class PadelAccesoryController {
     description: 'PadelAccesory model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(PadelAccesory, {includeRelations: true}),
+        schema: getModelSchemaRef(PadelAccesory, { includeRelations: true }),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(PadelAccesory, {exclude: 'where'}) filter?: FilterExcludingWhere<PadelAccesory>
+    @param.filter(PadelAccesory, { exclude: 'where' }) filter?: FilterExcludingWhere<PadelAccesory>
   ): Promise<PadelAccesory> {
     return this.padelAccesoryRepository.findById(id, filter);
   }
@@ -120,7 +120,7 @@ export class PadelAccesoryController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(PadelAccesory, {partial: true}),
+          schema: getModelSchemaRef(PadelAccesory, { partial: true }),
         },
       },
     })
@@ -137,6 +137,7 @@ export class PadelAccesoryController {
     @param.path.string('id') id: string,
     @requestBody() padelAccesory: PadelAccesory,
   ): Promise<void> {
+    PadelAccesory
     await this.padelAccesoryRepository.replaceById(id, padelAccesory);
   }
 
@@ -146,5 +147,28 @@ export class PadelAccesoryController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.padelAccesoryRepository.deleteById(id);
+  }
+
+  //Filtrar por marca:
+  @get('/padel-accesories/brand/{brand}')
+  @response(200, {
+    description: 'Array of Padelracket model instances filtered by brand',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(PadelAccesory, { includeRelations: true }),
+        },
+      },
+    },
+  })
+  async findByBrand(
+    @param.path.string('brand') brand: string,
+  ): Promise<PadelAccesory[]> {
+    return this.padelAccesoryRepository.find({
+      where: {
+        brand: brand, // Aseguramos que el filtro sea exacto
+      },
+    });
   }
 }
