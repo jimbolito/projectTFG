@@ -252,3 +252,16 @@ body {
 .product-image:hover {
   transform: scale(1.05);
 }
+
+.no-products-container {
+  height: 50vh;
+  /* 50% de la ventana */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.3em;
+  /* font-weight: bold; */
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+}

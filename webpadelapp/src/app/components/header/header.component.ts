@@ -23,12 +23,12 @@ export class HeaderComponent {
     },
     {
       name: 'Ropa',
-      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'Nox', 'Puma', 'Vibora', 'Wilson'],
+      subcategories: ['Adidas', 'Babolat', 'Bullpadel', 'Nox', 'Puma', 'Munich', 'Lok'],
       open: false,
     },
     {
       name: 'Pelotas',
-      subcategories: ['Adidas', 'Babolat', 'Head', 'Wilson', 'StarVie', ''],
+      subcategories: ['Adidas', 'Bullpadel', 'Head', 'Wilson', 'StarVie', ''],
       open: false,
     },
     {

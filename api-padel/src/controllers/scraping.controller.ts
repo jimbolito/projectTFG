@@ -128,7 +128,7 @@ import { post, requestBody, HttpErrors } from '@loopback/rest';
 import { ScrapingService } from '../services/scraping-service.service';
 import urls from '../urls';
 import { repository } from '@loopback/repository';
-import { PadelballRepository, PadelracketRepository, PadelshoeRepository } from '../repositories';
+import { PadelAccesoryRepository, PadelballRepository, PadelClothingRepository, PadelracketRepository, PadelshoeRepository } from '../repositories';
 
 export class ScrapingController {
   constructor(
@@ -136,10 +136,18 @@ export class ScrapingController {
     protected scrapingService: ScrapingService,
     @repository(PadelshoeRepository)
     public shoeRepo: PadelshoeRepository,
+
     @repository(PadelracketRepository)
     public racketRepo: PadelracketRepository,
+
     @repository(PadelballRepository)
     public ballRepo: PadelballRepository,
+
+    @repository(PadelClothingRepository)
+    public clothingRepo: PadelClothingRepository,
+
+    @repository(PadelAccesoryRepository)
+    public accesoryRepo: PadelAccesoryRepository,
   ) { }
 
   @post('/scrape')
@@ -168,23 +176,6 @@ export class ScrapingController {
 
     // Configuración por categoría
     const categoryConfig = {
-      shoesCategory: {
-        repo: this.shoeRepo,
-        mapData: (item: any) => ({
-          name: item.name,
-          price: item.price,
-          initial_price: item.oldPrice || undefined,
-          percentage_discount: item.discountPercentage || undefined,
-          stock_quantity: item.stock_quantity,
-          description: item.description || 'Sin descripción',
-          brand,
-          sex: item.sex,
-          level: item.level,
-          weight: item.weight,
-          images: this.completeImageUrls(item.imageUrls), // Completar URLs
-          creation_date: new Date().toISOString(),
-        }),
-      },
       padelCategory: {
         repo: this.racketRepo,
         mapData: (item: any) => ({
@@ -202,6 +193,40 @@ export class ScrapingController {
           creation_date: new Date().toISOString(),
         }),
       },
+      shoesCategory: {
+        repo: this.shoeRepo,
+        mapData: (item: any) => ({
+          name: item.name,
+          price: item.price,
+          initial_price: item.oldPrice || undefined,
+          percentage_discount: item.discountPercentage || undefined,
+          stock_quantity: item.stock_quantity,
+          description: item.description || 'Sin descripción',
+          brand,
+          sex: item.sex,
+          level: item.level,
+          weight: item.weight,
+          images: this.completeImageUrls(item.images), // Completar URLs
+          creation_date: new Date().toISOString(),
+        }),
+      },
+      clothCategory: {
+        repo: this.clothingRepo,
+        mapData: (item: any) => ({
+          name: item.name,
+          price: item.price,
+          initial_price: item.oldPrice || undefined,
+          percentage_discount: item.discountPercentage || undefined,
+          stock_quantity: item.stock_quantity,
+          description: item.description || 'Sin descripción',
+          brand,
+          // sex: item.sex,
+          // level: item.level,
+          // weight: item.weight,
+          images: this.completeImageUrls(item.images), // Completar URLs
+          creation_date: new Date().toISOString(),
+        }),
+      },
       ballsCategory: {
         repo: this.ballRepo,
         mapData: (item: any) => ({
@@ -215,6 +240,23 @@ export class ScrapingController {
           creation_date: new Date().toISOString(),
         }),
       },
+      accesoriesCategory: {
+        repo: this.accesoryRepo,
+        mapData: (item: any) => ({
+          name: item.name,
+          price: item.price,
+          initial_price: item.oldPrice || undefined,
+          percentage_discount: item.discountPercentage || undefined,
+          stock_quantity: item.stock_quantity,
+          description: item.description || 'Sin descripción',
+          brand,
+          // sex: item.sex,
+          // level: item.level,
+          // weight: item.weight,
+          images: this.completeImageUrls(item.images), // Completar URLs
+          creation_date: new Date().toISOString(),
+        }),
+      }
     };
 
     const config = categoryConfig[category as keyof typeof categoryConfig];
@@ -226,8 +268,9 @@ export class ScrapingController {
     const { repo, mapData } = config;
     let insertedCount = 0;
 
+    let data: any;
     for (const item of scrapedData) {
-      const data = mapData(item);
+      data = mapData(item);
       console.log('Datos mapeados:', data); // Verificar que las imágenes están completas
       await repo.create(data);
       insertedCount++;
@@ -238,6 +281,7 @@ export class ScrapingController {
       category,
       brand,
       insertedCount,
+      data
     };
   }
 

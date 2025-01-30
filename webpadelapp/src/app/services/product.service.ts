@@ -125,15 +125,23 @@ export class ProductService {
         break;
       case 'Zapatillas':
         endpoint = `/padelshoes/brand/${brand}`;
+        console.log("zapatillas")
+        console.log(endpoint);
         break;
       case 'Accesorios':
         endpoint = `/padel-accesories/brand/${brand}`;
+        console.log("accesorios")
+        console.log(endpoint);
         break;
       case 'Ropa':
         endpoint = `/padel-clothings/brand/${brand}`;
+        console.log("ropa")
+        console.log(endpoint);
         break;
       case 'Pelotas':
         endpoint = `/padelballs/brand/${brand}`;
+        console.log("pelotas")
+        console.log(endpoint);
         break;
       default:
         throw new Error(`Categoría no soportada: ${category}`);

@@ -24,6 +24,8 @@ const urls = {
     Bullpadel: 'https://padelmarket.com/es-eu/collections/ropa?filter.p.vendor=Bullpadel',
     Nox: 'https://padelmarket.com/es-eu/collections/ropa?filter.p.vendor=Nox',
     Puma: 'https://padelmarket.com/es-eu/collections/ropa?filter.p.vendor=Puma',
+    Munich: 'https://padelmarket.com/es-eu/collections/ropa?filter.p.vendor=Munich',
+    Lok: 'https://padelmarket.com/es-eu/collections/ropa?filter.p.vendor=Lok'
 
   },
   ballsCategory: {

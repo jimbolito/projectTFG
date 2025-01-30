@@ -1,4 +1,6 @@
-<div style="background-color: #EDEDED; padding: 20px;">
+<!-- <div style="background-color: #EDEDED; padding: 20px; height: 100vh;"> -->
+  <div style="background-color: #EDEDED; padding: 20px;">
+
   <h1>{{ categoryName }} - {{ subcategoryName }}</h1>
 
   <div *ngIf="error; else productList">
@@ -8,31 +10,23 @@
   <ng-template #productList>
     <div *ngIf="products.length > 0; else noProducts">
       <div class="product-grid">
-        <!-- <div *ngFor="let product of products" class="product-card">
-          <!-- Renderizar la primera imagen del array -->
-        <!-- <img *ngIf="product.images && product.images.length > 0" [src]="product.images[0]" alt="{{ product.name }}"
-            class="product-image" />
-          <h3>{{ product.name }}</h3>
-          <p>Precio: {{ product.price }} €</p>
-          <p>Descuento: {{ product.percentage_discount || 'Sin descuento' }}</p>
-          <button class="add-to-cart" (click)="openModal(product)">Más información</button>
-        </div>  -->
         <div *ngFor="let product of products" class="product-card">
           <img *ngIf="product.images && product.images.length > 0"
             [src]="product.images[hoveredProduct === product ? hoveredImageIndex : 0]" alt="{{ product.name }}"
             class="product-image" (mouseenter)="onMouseEnter(product)" (mouseleave)="onMouseLeave()" />
           <h3>{{ product.name }}</h3>
           <p>{{ product.price }} €</p>
-          <!-- <p>Descuento: {{ product.percentage_discount || 'Sin descuento' }}</p> -->
           <button class="add-to-cart" (click)="openModal(product)">Más información</button>
         </div>
-
       </div>
     </div>
+  </ng-template>
 
-    <ng-template #noProducts>
-      <p>No hay productos disponibles para esta subcategoría.</p>
-    </ng-template>
+  <!-- 🔹 Aquí está el `ng-template` bien posicionado -->
+  <ng-template #noProducts>
+    <div class="no-products-container">
+      <p>No hay productos disponibles. !Vuelve pronto¡</p>
+    </div>
   </ng-template>
 </div>
 

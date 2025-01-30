@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,4 +6,22 @@ body {
 
 *, *::before, *::after {
     box-sizing: inherit;
+} */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+app-category {
+    flex-grow: 1; /* Permite que el contenido empuje el footer hacia abajo */
+}
+
+app-footer {
+    margin-top: auto; /* Mantiene el footer en la parte inferior */
 }

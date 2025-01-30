@@ -1,28 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 
-// const config = {
-//   name: 'mongodb',
-//   connector: 'mongodb',
-//   url: 'mongodb://localhost:27017',
-//   // host: '',
-//   // port: 0,
-//   // user: '',
-//   // password: '',
-//   database: 'padelmarketdb',
-//   useNewUrlParser: true
-// };
-
-
-//funciona en localhost:
-// const config = {
-//   name: 'mongodb',
-//   connector: 'mongodb',
-//   url: 'mongodb://localhost:27017/padelmarketdb',
-//   useUnifiedTopology: true
-// };
-
-//Cambiada segun el docker: 
 const config = {
   name: 'mongodb',
   connector: 'mongodb',

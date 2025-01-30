@@ -20,7 +20,7 @@ export interface ScrapedProduct {
   sex?: string;
   level?: string;
   weight?: string;
-  // sizes?: string[];
+  sizes?: string[];
   imageUrls?: string[];
   creation_date: Date;
 
@@ -41,22 +41,23 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
   /**
    * Método para aceptar cookies antes de realizar el scraping.
    */
-  // private async acceptCookies(page: any) {
-  //   // Esperar a que aparezca el contenedor del banner de cookies
-  //   await page.waitForSelector('#CybotCookiebotDialogFooter');
+  private async acceptCookies(page: any) {
+    // Esperar a que aparezca el contenedor del banner de cookies
 
-  //   // Seleccionar el botón "Allow all"
-  //   const allowAllButton = await page.$(
-  //     '#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll'
-  //   );
-  //   if (allowAllButton) {
-  //     await allowAllButton.click();
-  //     console.log("Aceptando cookies");
-  //     await this.delay(5000);
-  //   } else {
-  //     throw new Error('No se encontró el botón "Allow all" en el banner de cookies.');
-  //   }
-  // }
+    try {
+      await page.waitForSelector('#CybotCookiebotDialogFooter', { state: 'visible', timeout: 1500 });
+
+      // Seleccionar el botón "Allow all"
+      const allowAllButton = await page.$(
+        '#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll'
+      );
+      if (allowAllButton) {
+        await allowAllButton.click();
+      }
+    } catch (error) {
+      console.log("No se encontró selector de cookies")
+    }
+  }
 
   //Waiting timing to do something:
   private async delay(ms?: number) {
@@ -64,6 +65,7 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
       setTimeout(resolve, ms ?? 500);
     });
   }
+
   private async pressButtonPlus(page: any) {
     // Selector para el botón 'Add to Cart'
     const addToCartSelector = '#AddToCart';
@@ -92,9 +94,6 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
 
       // Generar un número aleatorio entre 10 y 40 para definir la cantidad de clics
       const randomClicks = Math.floor(Math.random() * (40 - 10 + 1)) + 10;
-
-      console.log(`Realizando ${randomClicks} clic(s) en el botón "Plus".`);
-
       for (let i = 0; i < randomClicks; i++) {
         await plusButton.click();
         // Añadir un pequeño retraso entre clics para simular interacción humana
@@ -102,7 +101,7 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
       }
       return randomClicks;
     } catch (error) {
-      console.error('Ocurrió un error:', error);
+      console.error('Ocurrió un error al pulsar el boton de cantidad producto:', error);
       return 0;
     }
   }
@@ -131,7 +130,7 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
         await page.goto(url, { waitUntil: 'networkidle2' });
 
         // Aceptar cookies si es necesario
-        // await this.acceptCookies(page);
+        await this.acceptCookies(page);
 
         // Esperar a que cargue el contenedor de productos
         await page.waitForSelector('#product-grid');
@@ -148,6 +147,8 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
 
         // Iterar sobre los enlaces de productos
         for (const productLink of productLinks) {
+          // for (const productLink of productLinks.slice(0, 1)) {
+
           const productPage = await browser.newPage();
           // Configurar la resolución de la página
           await productPage.setViewport({
@@ -177,54 +178,92 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
 
 
           const description = await productPage.$eval('.collapsible__content.accordion__content.rte', el => el.textContent.trim());
-          // const description = await productPage.$eval('#ProductAccordion-collapsible_tab_YejnpG-template--24313445745013__main-product', el => el.textContent.trim());
 
-          const brand = await productPage.$$eval('.custom_row', (rows) => {
-            for (const row of rows) {
-              const titleElement = row.querySelector('.row_title');
-              if (titleElement && titleElement.textContent?.trim() === 'Marca') {
-                const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
-                return valueElement?.textContent?.trim() || null;
-              }
-            }
-            return null;
-          });
+          // const brand = await productPage.$$eval('.custom_row', (rows) => {
+          //   for (const row of rows) {
+          //     const titleElement = row.querySelector('.row_title');
+          //     if (titleElement && titleElement.textContent?.trim() === 'Marca') {
+          //       const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
+          //       return valueElement?.textContent?.trim() || null;
+          //     }
+          //   }
+          //   return null;
+          // });
 
-          // Obtén el valor del sexo
-          const sex = await productPage.$$eval('.custom_row', (rows) => {
-            for (const row of rows) {
-              const titleElement = row.querySelector('.row_title');
-              if (titleElement && titleElement.textContent?.trim() === 'Sexo') {
-                const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
-                return valueElement?.textContent?.trim() || null;
-              }
-            }
-            return null;
-          });
+          // // Obtén el valor del sexo
+          // const sex = await productPage.$$eval('.custom_row', (rows) => {
+          //   for (const row of rows) {
+          //     const titleElement = row.querySelector('.row_title');
+          //     if (titleElement && titleElement.textContent?.trim() === 'Sexo') {
+          //       const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
+          //       return valueElement?.textContent?.trim() || null;
+          //     }
+          //   }
+          //   return null;
+          // });
 
-          // Obtén el valor del nivel
-          const level = await productPage.$$eval('.custom_row', (rows) => {
-            for (const row of rows) {
-              const titleElement = row.querySelector('.row_title');
-              if (titleElement && titleElement.textContent?.trim() === 'Nivel') {
-                const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
-                return valueElement?.textContent?.trim() || null;
-              }
-            }
-            return null;
-          });
+          // // Obtén el valor del nivel
+          // const level = await productPage.$$eval('.custom_row', (rows) => {
+          //   for (const row of rows) {
+          //     const titleElement = row.querySelector('.row_title');
+          //     if (titleElement && titleElement.textContent?.trim() === 'Nivel') {
+          //       const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
+          //       return valueElement?.textContent?.trim() || null;
+          //     }
+          //   }
+          //   return null;
+          // });
 
-          // Obtén el valor del peso
-          const weight = await productPage.$$eval('.custom_row', (rows) => {
-            for (const row of rows) {
-              const titleElement = row.querySelector('.row_title');
-              if (titleElement && titleElement.textContent?.trim() === 'Peso') {
-                const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
-                return valueElement?.textContent?.trim() || null;
+          // // Obtén el valor del peso
+          // const weight = await productPage.$$eval('.custom_row', (rows) => {
+          //   for (const row of rows) {
+          //     const titleElement = row.querySelector('.row_title');
+          //     if (titleElement && titleElement.textContent?.trim() === 'Peso') {
+          //       const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
+          //       return valueElement?.textContent?.trim() || null;
+          //     }
+          //   }
+          //   return null;
+          // });
+
+          const detailsSelector = '#Details-collapsible_tab_YejnpG-template--24313445745013__main-product';
+          await productPage.waitForSelector(detailsSelector);
+          const isOpen = await productPage.$eval(detailsSelector, (el: any) => el.hasAttribute('open'));
+
+          if (!isOpen) {
+            await productPage.click(detailsSelector);
+          }
+
+          // Espera un momento para asegurar que el contenido se haya expandido
+          await this.delay(1000); // Puedes ajustar el tiempo según sea necesario
+
+          // Función para extraer el valor de un campo dado su título
+          const getFieldValue = async (fieldTitle: string): Promise<string | null> => {
+            return await page.$$eval('.custom_row', (rows, title) => {
+              for (const row of rows) {
+                const titleElement = row.querySelector('.row_title');
+                if (titleElement && titleElement.textContent?.trim() === title) {
+                  const valueElement = row.querySelector(':scope > div:nth-child(2) > div');
+                  return valueElement?.textContent?.trim() || null;
+                }
               }
-            }
-            return null;
-          });
+              return null;
+            }, fieldTitle);
+          };
+
+          // Extrae los valores deseados
+          let brand = await getFieldValue('Marca') || "";
+          let sex = await getFieldValue('Sexo') || "";
+          let level = await getFieldValue('Nivel') || "";
+          // let tipoDeJuego = await getFieldValue('Tipo de juego');
+          // const forma = await getFieldValue('Forma');
+          let weight = await getFieldValue('Peso') || "";
+          // const marco = await getFieldValue('Marco');
+          // const nucleo = await getFieldValue('Núcleo');
+          // const cara = await getFieldValue('Cara');
+          // const temporada = await getFieldValue('Temporada');
+          // const sku = await getFieldValue('SKU');
+          // const ean13 = await getFieldValue('Ean13');
 
           const imagesAll = await productPage.$$eval('.product-images img', imgs =>
             imgs.map(img => img.getAttribute('src'))
@@ -254,7 +293,7 @@ export class ScrapingServiceProvider implements Provider<ScrapingService> {
 
           products.push(productData);
           // console.log(productData.images);
-
+          // console.log(products)
           await productPage.close();
         }
         // Cerrar el navegador
